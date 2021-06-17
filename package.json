@@ -4,7 +4,9 @@
   "description": "A real-time video conference application",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "Faiz Bachoo Shah",
   "license": "MIT",
@@ -12,5 +14,8 @@
     "express": "^4.17.1",
     "peer": "^0.6.1",
     "socket.io": "^4.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
