@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
+import '../styles/Home.scss'
 
 const ENDPOINT = "http://localhost:5000";
 
