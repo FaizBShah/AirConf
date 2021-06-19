@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+@import './styles/partials/variables';
 
 * {
   box-sizing: border-box;
@@ -9,6 +10,15 @@
 body {
   font-family: 'Roboto', sans-serif;
   line-height: 1.4;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-secondary;
+  border-radius: 10px;
 }
 
 a {

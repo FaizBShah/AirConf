@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 import '../styles/Home.scss'
 
 const ENDPOINT = "http://localhost:5000";
 
 function Home() {
-  const [message, setMessage] = useState("");
-
   useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
 
     socket.on("message", (message) => {
-      setMessage(message);
+      console.log(message);
     });
 
     return () => socket.disconnect();
   }, []);
 
   return (
-    <>
-      <h1>{message}</h1>
-    </>
+    <div className="background">
+      <div className="overlay"></div>
+      <div className="main-area">
+        
+      </div>
+    </div>
   )
 }
 
