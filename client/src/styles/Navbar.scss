@@ -1,0 +1,43 @@
+@import './partials/variables';
+
+#navbar {
+  padding: 0.4rem 0;
+
+  .nav-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    #nav-logo {
+      font-family: $logo-font;
+      color: $color-secondary;
+      font-size: 2.5rem;
+
+      @media (max-width: 600px) {
+        font-size: 2rem;
+      }
+    }
+
+    #menu .menu-list {
+      display: flex;
+
+      .menu-item {
+        flex: 1;
+        margin: 0 1rem;
+
+        & > a {
+          color: $color-secondary;
+          font-size: 2rem;
+
+          @media (max-width: 600px) {
+            font-size: 1.2rem;
+          }
+        }
+
+        @media (max-width: 600px) {
+          margin: 0 0.5rem;
+        }
+      }
+    }
+  }
+}
