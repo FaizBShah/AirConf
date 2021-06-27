@@ -1,0 +1,62 @@
+@import './partials/variables';
+
+.showcase-area {
+  height: 95%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .content-area {
+    display: flex;
+    width: 80%;
+    padding: 2rem;
+    gap: 10rem;
+
+    & > div {
+      flex: 1;
+    }
+
+    .join-area {
+      font-family: $main-font;
+
+      .content-title {
+        font-size: 2.5rem;
+        color: $color-secondary;
+        @media (max-width: 768px) {
+          font-size: 1.8rem;
+        }
+      }
+
+      .content-text {
+        margin: 2rem 0;
+        font-size: 1.2rem;
+        color: #fefefe;
+        @media (max-width: 768px) {
+          font-size: 1rem;
+        }
+      }
+
+      #join-button {
+        background: #fefefe;
+        padding: 0.4rem 1.4rem;
+        border: 1px solid $color-secondary;
+        border-radius: 50px;
+        font-size: 1rem;
+        transition: background-color 0.2s, color 0.2s;
+
+        &:hover {
+          background: transparent;
+          color: #fefefe;
+        }
+
+        @media (max-width: 600px) {
+          display: inline-block;
+        }
+      }
+    }
+
+    @media (max-width: 600px) {
+      display: block;
+    }
+  }
+}
