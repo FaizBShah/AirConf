@@ -3,6 +3,7 @@ import socketIOClient from 'socket.io-client';
 import '../styles/Home.scss';
 import Navbar from '../components/Navbar';
 import Showcase from '../components/Showcase';
+import Footer from '../components/Footer';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -18,13 +19,16 @@ function Home() {
   }, []);
 
   return (
-    <div className="background">
-      <div className="overlay"></div>
-      <div className="main-area">
-        <Navbar />
-        <Showcase />
+    <>
+      <div className="background">
+        <div className="overlay"></div>
+        <div className="main-area">
+          <Navbar />
+          <Showcase />
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   )
 }
 
