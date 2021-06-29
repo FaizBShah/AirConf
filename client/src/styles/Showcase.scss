@@ -21,7 +21,7 @@
 
       .content-title {
         font-size: 2.5rem;
-        color: $color-secondary;
+        color: $color-primary;
         @media (max-width: 768px) {
           font-size: 1.8rem;
         }
@@ -39,10 +39,11 @@
       #join-button {
         background: #fefefe;
         padding: 0.4rem 1.4rem;
-        border: 1px solid $color-secondary;
+        border: 1px solid $color-primary;
         border-radius: 50px;
         font-size: 1rem;
         transition: background-color 0.2s, color 0.2s;
+        transition-timing-function: ease-in-out;
 
         &:hover {
           background: transparent;
@@ -55,8 +56,78 @@
       }
     }
 
+    .about-area {
+      font-family: $main-font;
+
+      .about-title {
+        font-size: 2.2rem;
+        color: $color-primary;
+
+        @media (max-width: 1024px) {
+          font-size: 1.8rem;
+        }
+
+        @media (max-width: 768px) {
+          font-size: 1.6rem;
+        }
+      }
+
+      .about-item {
+        display: flex;
+        margin-bottom: 3rem;
+      }
+
+      .list-icon-area {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        background: #fefefe;
+        padding: 0.1rem 0.2rem;
+        margin-right: 0.5rem;
+
+        .list-icon {
+          color: $color-secondary;
+          font-size: 2rem;
+
+          @media (max-width: 768px) {
+            font-size: 1.5rem;
+          }
+        }
+      }
+
+      .list-text {
+        flex: 5;
+        margin: 0 0.5rem;
+        font-size: 1.4rem;
+        color: #fefefe;
+
+        @media (max-width: 1024px) {
+          flex: 3;
+          font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+          flex: 4;
+          font-size: 0.8rem;
+        }
+      }
+
+      @media (max-width: 600px) {
+        margin-top: 4rem;
+      }
+    }
+
     @media (max-width: 600px) {
       display: block;
     }
+  }
+
+  @media (max-width: 600px) {
+    justify-content: space-around;
+    align-items: flex-start;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }

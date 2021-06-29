@@ -11,7 +11,33 @@ function Showcase() {
           <a href="/" id="join-button" >Join Meeting</a>
         </div>
         <div className="about-area">
-
+          <h1 className="about-title">Features of AirConf</h1>
+          <ul style={{padding: '2rem 0'}}>
+            <li className="about-item">
+              <div className="list-icon-area">
+                <i className="fas fa-tv list-icon"></i>
+              </div>
+              <p className="list-text">
+                Enter into a video call anytime without the hassles of logging in
+              </p>
+            </li>
+            <li className="about-item">
+              <div className="list-icon-area">
+                <i className="fas fa-users list-icon"></i>
+              </div>
+              <p className="list-text">
+                Organize a meeting with multiple people on high-quality video call
+              </p>
+            </li>
+            <li className="about-item">
+              <div className="list-icon-area">
+                <i className="fas fa-comment-dots list-icon"></i>
+              </div>
+              <p className="list-text">
+                Chat and share your thoughts with each other while on the call
+              </p>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
