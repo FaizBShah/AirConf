@@ -1,8 +1,11 @@
 @import './partials/variables';
 
 .footer-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
   background: #fdfdfd;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   z-index: 3;
 
   .footer-text {

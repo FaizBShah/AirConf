@@ -26,8 +26,8 @@ function Home() {
           <Navbar />
           <Showcase />
         </div>
+        <Footer />
       </div>
-      <Footer />
     </>
   )
 }
