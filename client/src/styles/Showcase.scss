@@ -75,42 +75,42 @@
       .about-item {
         display: flex;
         margin-bottom: 3rem;
-      }
 
-      .list-icon-area {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        background: #fefefe;
-        padding: 0.1rem 0.2rem;
-        margin-right: 0.5rem;
-
-        .list-icon {
-          color: $color-secondary;
-          font-size: 2rem;
-
-          @media (max-width: 768px) {
-            font-size: 1.5rem;
+        .list-icon-area {
+          flex: 1;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 10px;
+          background: #fefefe;
+          padding: 0.1rem 0.2rem;
+          margin-right: 0.5rem;
+  
+          .list-icon {
+            color: $color-secondary;
+            font-size: 2rem;
+  
+            @media (max-width: 768px) {
+              font-size: 1.5rem;
+            }
           }
         }
-      }
-
-      .list-text {
-        flex: 5;
-        margin: 0 0.5rem;
-        font-size: 1.4rem;
-        color: #fefefe;
-
-        @media (max-width: 1024px) {
-          flex: 3;
-          font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-          flex: 4;
-          font-size: 0.8rem;
+  
+        .list-text {
+          flex: 5;
+          margin: 0 0.5rem;
+          font-size: 1.4rem;
+          color: #fefefe;
+  
+          @media (max-width: 1024px) {
+            flex: 3;
+            font-size: 1rem;
+          }
+  
+          @media (max-width: 768px) {
+            flex: 4;
+            font-size: 0.8rem;
+          }
         }
       }
 

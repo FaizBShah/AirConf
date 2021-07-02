@@ -1,23 +1,10 @@
-import React, { useEffect } from 'react';
-import socketIOClient from 'socket.io-client';
+import React from 'react';
 import '../styles/Home.scss';
 import Navbar from '../components/Navbar';
 import Showcase from '../components/Showcase';
 import Footer from '../components/Footer';
 
-const ENDPOINT = "http://localhost:5000";
-
 function Home() {
-  useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-
-    socket.on("message", (message) => {
-      console.log(message);
-    });
-
-    return () => socket.disconnect();
-  }, []);
-
   return (
     <>
       <div className="background">
