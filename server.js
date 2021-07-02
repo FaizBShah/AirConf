@@ -10,10 +10,6 @@ const io = socketio(server, {
   }
 });
 
-app.get("/", (req, res) => {
-  res.send({ response: "I am alive" }).status(200);
-});
-
 io.on('connection', (socket) => {
   console.log("Connected");
   socket.emit("message", "Connected");
