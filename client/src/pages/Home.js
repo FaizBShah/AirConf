@@ -1,8 +1,8 @@
 import React from 'react';
 import '../styles/Home.scss';
-import Navbar from '../components/Navbar';
-import Showcase from '../components/Showcase';
-import Footer from '../components/Footer';
+import Navbar from '../components/Home/Navbar';
+import Showcase from '../components/Home/Showcase';
+import Footer from '../components/Home/Footer';
 
 function Home() {
   return (
