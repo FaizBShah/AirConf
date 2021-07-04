@@ -16,7 +16,7 @@ function BottomMenu() {
         >
           <Grid
             item
-            xs={3}
+            xs={window.innerWidth > 768 ? 2 : 3}
           >
             <div className="icon-container">
               <Tooltip title="Video Off">
@@ -28,7 +28,7 @@ function BottomMenu() {
           </Grid>
           <Grid
             item
-            xs={3}
+            xs={window.innerWidth > 768 ? 2 : 3}
           >
             <div className="icon-container">
               <Tooltip title="Unmute mic">
@@ -40,7 +40,7 @@ function BottomMenu() {
           </Grid>
           <Grid
             item
-            xs={3}
+            xs={window.innerWidth > 768 ? 2 : 3}
           >
             <div className="icon-container">
               <Tooltip title="Open Chat">
@@ -52,7 +52,7 @@ function BottomMenu() {
           </Grid>
           <Grid
             item
-            xs={3}
+            xs={window.innerWidth > 768 ? 2 : 3}
           >
             <div className="icon-container">
               <Tooltip title="Leave Meeting">
