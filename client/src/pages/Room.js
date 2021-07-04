@@ -18,7 +18,6 @@ function Room() {
 
   return (
     <div>
-      <h1>Room</h1>
       <BottomMenu />
     </div>
   )
