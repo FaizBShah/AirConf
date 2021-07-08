@@ -3,12 +3,13 @@ import '../../styles/BottomMenu.scss';
 import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
+import { getChatWidth } from '../../utils/getChatWidth';
 
-function BottomMenu({ chatOpen, setChatOpen, chatWidth }) {
+function BottomMenu({ chatOpen, setChatOpen }) {
   const { width } = useWindowDimensions();
 
   return (
-    <div id='bottom-menu' style={{width: chatOpen ? `calc(100% - ${chatWidth()})` : '100%'}}>
+    <div id='bottom-menu' style={{width: chatOpen ? `calc(100% - ${getChatWidth(width)})` : '100%'}}>
       <Container maxWidth='lg' style={{height: '100%'}}>
         <Grid
           container
