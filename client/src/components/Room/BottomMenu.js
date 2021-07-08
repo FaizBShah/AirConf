@@ -4,11 +4,11 @@ import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
 
-function BottomMenu({ chatOpen, setChatOpen }) {
+function BottomMenu({ chatOpen, setChatOpen, chatWidth }) {
   const { width } = useWindowDimensions();
 
   return (
-    <div id='bottom-menu' style={{width: chatOpen ? 'calc(100% - 300px)' : '100%'}}>
+    <div id='bottom-menu' style={{width: chatOpen ? `calc(100% - ${chatWidth()})` : '100%'}}>
       <Container maxWidth='lg' style={{height: '100%'}}>
         <Grid
           container
