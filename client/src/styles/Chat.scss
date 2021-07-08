@@ -1,0 +1,27 @@
+@import './partials/variables';
+
+#chat-drawer-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .drawer-head-area {
+    display: flex;
+
+    .drawer-header {
+      flex: 1;
+      padding: 0 1rem;
+
+      .header {
+        margin-top: 0.3rem;
+        font-family: $logo-font;
+        color: $color-secondary;
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+  .drawer-chat-area {
+    flex: 1;
+  }
+}
