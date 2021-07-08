@@ -20,9 +20,9 @@ function RoomLayout() {
 
   return (
     <>
-      <div>
-        <BottomMenu setChatOpen={setChatOpen} />
+      <div style={{width: chatOpen ? 'calc(100% - 300px)' : '100%'}}>
       </div>
+      <BottomMenu chatOpen={chatOpen} setChatOpen={setChatOpen} />
       <Chat open={chatOpen} />
     </>
   )

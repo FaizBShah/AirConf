@@ -6,9 +6,9 @@ import { Drawer } from '@material-ui/core';
 // CHAT DRAWER
 export const ChatDrawer = withStyles({
   root: {
-    width: '240px'
+    width: '300px'
   },
   paper: {
-    width: '240px'
+    width: '300px'
   }
 })(Drawer);

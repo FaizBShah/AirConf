@@ -4,11 +4,11 @@ import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
 
-function BottomMenu({ setChatOpen }) {
+function BottomMenu({ chatOpen, setChatOpen }) {
   const { width } = useWindowDimensions();
 
   return (
-    <div id='bottom-menu'>
+    <div id='bottom-menu' style={{width: chatOpen ? 'calc(100% - 300px)' : '100%'}}>
       <Container maxWidth='lg' style={{height: '100%'}}>
         <Grid
           container
@@ -46,8 +46,8 @@ function BottomMenu({ setChatOpen }) {
             xs={width > 768 ? 2 : 3}
           >
             <div className="icon-container">
-              <Tooltip title="Open Chat">
-                <IconButton style={{background: '#ddacf5'}} onClick={() => setChatOpen(prevState => !prevState)}>
+              <Tooltip title={`${chatOpen ? 'Close' : 'Open'} Chat`}>
+                <IconButton style={{background: '#ddacf5'}} onClick={() => setChatOpen(!chatOpen)}>
                   <Forum fontSize="small" style={{color: '#64379f'}} />
                 </IconButton>
               </Tooltip>
