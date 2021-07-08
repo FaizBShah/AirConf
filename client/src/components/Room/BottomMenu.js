@@ -4,7 +4,7 @@ import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
 
-function BottomMenu() {
+function BottomMenu({ setChatOpen }) {
   const { width } = useWindowDimensions();
 
   return (
@@ -47,7 +47,7 @@ function BottomMenu() {
           >
             <div className="icon-container">
               <Tooltip title="Open Chat">
-                <IconButton style={{background: '#ddacf5'}}>
+                <IconButton style={{background: '#ddacf5'}} onClick={() => setChatOpen(prevState => !prevState)}>
                   <Forum fontSize="small" style={{color: '#64379f'}} />
                 </IconButton>
               </Tooltip>
