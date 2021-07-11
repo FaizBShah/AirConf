@@ -5,23 +5,32 @@
   flex-direction: column;
   height: 100%;
 
-  .drawer-head-area {
+  .head-area {
     display: flex;
+    padding-bottom: 1rem;
 
-    .drawer-header {
+    .header-inner-area {
       flex: 1;
       padding: 0 1rem;
 
-      .header {
-        margin-top: 0.3rem;
-        font-family: $logo-font;
-        color: $color-secondary;
-        font-size: 1.8rem;
+      .header-text-area {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .header {
+          line-height: 100%;
+          font-family: $main-font;
+          color: $color-secondary;
+          font-size: 1.1rem;
+          font-weight: 400;
+        }
       }
     }
   }
 
-  .drawer-chat-area {
+  .chat-area {
     flex: 1;
   }
 }
