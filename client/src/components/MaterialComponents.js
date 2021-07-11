@@ -34,13 +34,7 @@ export const MessageInput = withStyles({
       color: '#64379f'
     },
     '& .MuiInput-underline:after': {
-      borderBottomColor: '#64379f',
-      '&:hover fieldset': {
-        borderBottomColor: 'red'
-      },
-      '&:Mui-focused fieldset': {
-        borderBottomColor: 'red'
-      }
+      borderBottomColor: '#64379f'
     }
   }
 })(TextField);
