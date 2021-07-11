@@ -1,8 +1,8 @@
 import React from 'react';
 import '../../styles/Chat.scss';
-import { ChatDrawer } from '../MaterialComponents';
+import { ChatDrawer, MessageInput } from '../MaterialComponents';
 import { IconButton } from '@material-ui/core';
-import { Close } from '@material-ui/icons'
+import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons'
 
 function Chat({ open, setChatOpen }) {
   return (
@@ -23,7 +23,25 @@ function Chat({ open, setChatOpen }) {
 
           </div>
           <div className="bottom-area">
-
+            <div>
+              <div className="icon-area">
+                <IconButton>
+                  <PhotoSizeSelectActual fontSize="small" style={{color: '#64379f'}} />
+                </IconButton>
+              </div>
+            </div>
+            <div className="message-input-area">
+              <div className="message-input-inner-area">
+                <MessageInput label="Enter a message" />
+              </div>
+            </div>
+            <div>
+              <div className="icon-area">
+                <IconButton>
+                  <Send fontSize="small" style={{color: '#64379f'}} />
+                </IconButton>
+              </div>
+            </div>
           </div>
         </div>
       </ChatDrawer>
