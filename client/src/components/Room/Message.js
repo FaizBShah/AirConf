@@ -1,11 +1,14 @@
 import React from 'react';
 import '../../styles/Message.scss';
 
-function Message() {
+function Message({ message }) {
   return (
-    <div>
-      
-    </div>
+    <>
+      <div className="message">
+        <h5 className="title">{message.user} &nbsp;<span className="timestamp">{message.time}</span></h5>
+        <p className="message-body">{message.body}</p>
+      </div>
+    </>
   )
 }
 

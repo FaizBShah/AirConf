@@ -1,1 +1,19 @@
 @import './partials/variables';
+
+.message {
+  margin-bottom: 1rem;
+  font-family: $main-font;
+
+  .title {
+    margin-bottom: 0.2rem;
+
+    .timestamp {
+      font-weight: 400;
+      font-size: 0.7rem;
+    }
+  }
+
+  .message-body {
+    font-size: 0.8rem;
+  }
+}
