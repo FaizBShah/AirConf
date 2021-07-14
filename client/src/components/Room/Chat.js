@@ -2,7 +2,8 @@ import React from 'react';
 import '../../styles/Chat.scss';
 import { ChatDrawer, MessageInput } from '../MaterialComponents';
 import { IconButton } from '@material-ui/core';
-import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons'
+import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons';
+import Messages from './Messages';
 
 function Chat({ open, setChatOpen }) {
   return (
@@ -20,7 +21,7 @@ function Chat({ open, setChatOpen }) {
             </IconButton>
           </div>
           <div className="chat-area">
-
+            <Messages />
           </div>
           <div className="bottom-area">
             <div>
