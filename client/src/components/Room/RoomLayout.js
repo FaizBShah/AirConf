@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import BottomMenu from './BottomMenu';
 import socketIOClient from 'socket.io-client';
-import Chat from './Chat';
+import Chat from './chat/Chat';
 
 const ENDPOINT = "http://localhost:5000";
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/Message.scss';
+import '../../../styles/Message.scss';
 
 function Message({ message }) {
   return (

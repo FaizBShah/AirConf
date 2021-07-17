@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/Messages.scss';
+import '../../../styles/Messages.scss';
 import Message from './Message';
 
 function Messages() {

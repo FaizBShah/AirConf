@@ -1,6 +1,6 @@
 import React from 'react';
-import '../../styles/Chat.scss';
-import { ChatDrawer, MessageInput } from '../MaterialComponents';
+import '../../../styles/Chat.scss';
+import { ChatDrawer, MessageInput } from '../../MaterialComponents';
 import { IconButton } from '@material-ui/core';
 import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons';
 import Messages from './Messages';
