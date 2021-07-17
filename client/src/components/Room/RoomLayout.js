@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BottomMenu from './BottomMenu';
 import socketIOClient from 'socket.io-client';
 import Chat from './chat/Chat';
+import Meeting from './meeting/Meeting';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -20,8 +21,7 @@ function RoomLayout() {
 
   return (
     <>
-      <div style={{width: chatOpen ? 'calc(100% - 300px)' : '100%'}}>
-      </div>
+      <Meeting chatOpen={chatOpen} />
       <BottomMenu chatOpen={chatOpen} setChatOpen={setChatOpen} />
       <Chat open={chatOpen} setChatOpen={setChatOpen} />
     </>

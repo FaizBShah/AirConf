@@ -1,0 +1,16 @@
+@import './partials/variables';
+
+#meeting-area {
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.2s ease-out;
+
+  .meeting-info {
+    padding: 1rem;
+  }
+
+  .videos-area {
+    flex: 1;
+  }
+}
