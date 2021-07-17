@@ -3,10 +3,12 @@ import '../../../styles/Meeting.scss';
 import { useWindowDimensions } from '../../../utils/windowUtils';
 import { getChatWidth } from '../../../utils/getChatWidth';
 import { Tooltip, IconButton } from '@material-ui/core'
-import { Share } from '@material-ui/icons';
+import { Share, Close } from '@material-ui/icons';
+import { Notification } from '../../MaterialComponents';
 
 function Meeting({ chatOpen }) {
   const [roomId, setRoomId] = useState("");
+  const [notificationOpen, setNotificationOpen] = useState(false);
   const { width } = useWindowDimensions();
 
   useEffect(() => {
@@ -24,6 +26,16 @@ function Meeting({ chatOpen }) {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
+
+    setNotificationOpen(true);
+  }
+
+  const handleNotificationClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setNotificationOpen(false);
   }
 
   return (
@@ -43,6 +55,23 @@ function Meeting({ chatOpen }) {
 
         </div>
       </div>
+      <Notification
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
+        open={notificationOpen}
+        message="Link Copied"
+        autoHideDuration={2000}
+        onClose={handleNotificationClose}
+        action={
+          <>
+            <IconButton onClick={handleNotificationClose} >
+              <Close fontSize="small" style={{color: '#64379f'}} />
+            </IconButton>
+          </>
+        }
+      />
     </>
   )
 }

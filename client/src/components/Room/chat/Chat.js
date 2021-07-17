@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import '../../../styles/Chat.scss';
 import { ChatDrawer, MessageInput } from '../../MaterialComponents';
 import { IconButton } from '@material-ui/core';

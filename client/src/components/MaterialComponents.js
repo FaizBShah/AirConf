@@ -1,5 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
-import { Drawer, TextField } from '@material-ui/core';
+import { Drawer, TextField, Snackbar } from '@material-ui/core';
 
 // <---------------------- CHAT ------------------------------>
 
@@ -38,3 +38,21 @@ export const MessageInput = withStyles({
     }
   }
 })(TextField);
+
+// Notification
+export const Notification = withStyles({
+  root: {
+    '& .MuiSnackbarContent-root': {
+      backgroundColor: '#fff',
+      paddingTop: '0',
+      paddingBottom: '0',
+      borderLeft: '5px solid #64379f',
+      borderRight: '5px solid #64379f'
+    },
+    '& .MuiSnackbarContent-message': {
+      color: '#64379f',
+      fontFamily: '"Roboto", sans-serif',
+      fontWeight: '800'
+    }
+  }
+})(Snackbar);
