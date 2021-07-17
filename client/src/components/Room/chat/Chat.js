@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import '../../../styles/Chat.scss';
 import { ChatDrawer, MessageInput } from '../../MaterialComponents';
 import { IconButton } from '@material-ui/core';
@@ -6,6 +6,8 @@ import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons';
 import Messages from './Messages';
 
 function Chat({ open, setChatOpen }) {
+  const [messages, setMessages] = useState([]);
+
   return (
     <>
       <ChatDrawer open={open} variant="persistent" anchor="right">
@@ -21,7 +23,7 @@ function Chat({ open, setChatOpen }) {
             </IconButton>
           </div>
           <div className="chat-area">
-            <Messages />
+            <Messages messages={messages} />
           </div>
           <div className="bottom-area">
             <div>

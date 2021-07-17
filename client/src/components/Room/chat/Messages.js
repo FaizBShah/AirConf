@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import '../../../styles/Messages.scss';
 import Message from './Message';
 
-function Messages() {
-  const [messages, setMessages] = useState([]);
-
+function Messages({ messages }) {
   return (
     <>
       <div className="messages-main-area">
