@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../../styles/Meeting.scss';
 import { useWindowDimensions } from '../../../utils/windowUtils';
 import { getChatWidth } from '../../../utils/getChatWidth';
-import { Tooltip, IconButton } from '@material-ui/core'
+import { Tooltip, IconButton, Grid } from '@material-ui/core'
 import { Share, Close } from '@material-ui/icons';
 import { Notification } from '../../MaterialComponents';
 
@@ -10,6 +10,7 @@ function Meeting({ chatOpen }) {
   const [roomId, setRoomId] = useState("");
   const [notificationOpen, setNotificationOpen] = useState(false);
   const { width } = useWindowDimensions();
+  const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 , 14];
 
   useEffect(() => {
     setRoomId(getRoomId(window.location.pathname));
@@ -52,7 +53,24 @@ function Meeting({ chatOpen }) {
           </div>
         </div>
         <div className="videos-area">
-
+          <Grid
+            container
+            direction="row"
+            justify="space-evenly"
+            spacing={2}
+            style={{height: '100%'}}
+          >
+            {videos.map(video => (
+              <Grid
+                item
+                lg={3}
+                md={6}
+                xs={12}
+              >
+                <div style={{height: '12rem', background: '#64379f', borderRadius: '10px'}}></div>
+              </Grid>
+            ))}
+          </Grid>
         </div>
       </div>
       <Notification

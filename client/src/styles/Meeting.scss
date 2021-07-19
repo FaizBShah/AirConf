@@ -25,5 +25,7 @@
 
   .videos-area {
     flex: 1;
+    padding: 2rem;
+    overflow-y: scroll;
   }
 }
