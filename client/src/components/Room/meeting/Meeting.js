@@ -5,6 +5,7 @@ import { getChatWidth } from '../../../utils/getChatWidth';
 import { Tooltip, IconButton, Grid } from '@material-ui/core'
 import { Share, Close } from '@material-ui/icons';
 import { Notification } from '../../MaterialComponents';
+import Video from './Video';
 
 function Meeting({ chatOpen }) {
   const [roomId, setRoomId] = useState("");
@@ -67,7 +68,7 @@ function Meeting({ chatOpen }) {
                 md={6}
                 xs={12}
               >
-                <div style={{height: '12rem', background: '#64379f', borderRadius: '10px'}}></div>
+                <Video video={video} />
               </Grid>
             ))}
           </Grid>

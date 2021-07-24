@@ -39,7 +39,7 @@ export const MessageInput = withStyles({
   }
 })(TextField);
 
-// Notification
+// NOTIFICATION
 export const Notification = withStyles({
   root: {
     '& .MuiSnackbarContent-root': {
