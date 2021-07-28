@@ -2,11 +2,45 @@
 
 .video-card {
   width: 100%;
+  position: relative;
 
   .video-stream {
     width: 100%;
     height: auto;
     border-radius: 10px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+  }
+
+  .video-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    z-index: 1;
+
+    .info-header {
+      text-align: right;
+    }
+
+    .user-icon {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .user-name-area {
+      padding: 0.4rem 0.8rem;
+
+      .username {
+        color: $color-primary;
+        font-family: $main-font;
+        font-weight: 300;
+      }
+    }
   }
 }
