@@ -39,6 +39,20 @@ export const MessageInput = withStyles({
   }
 })(TextField);
 
+// USER NAME INPUT FIELD
+export const UserNameInput = withStyles({
+  root: {
+    width: '95%',
+    paddingBottom: '1rem',
+    '& label.Mui-focused': {
+      color: '#64379f'
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#64379f'
+    }
+  }
+})(TextField);
+
 // NOTIFICATION
 export const Notification = withStyles({
   root: {
