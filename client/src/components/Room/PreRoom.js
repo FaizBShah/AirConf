@@ -21,7 +21,12 @@ function PreRoom({ setIsRoomActive, setUsername }) {
         videoRef.current.play();
       });
     })
-  }, [])
+  }, []);
+
+  const onToggleAudio = () => {
+    stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0].enabled;
+    console.log(stream.getAudioTracks()[0].enabled);
+  }
 
   return (
     <>
@@ -46,8 +51,8 @@ function PreRoom({ setIsRoomActive, setUsername }) {
                   </Tooltip>
                 </div>
                 <div className="icon-container">
-                  <Tooltip title="Video Off">
-                    <IconButton style={{background: '#64379f'}}>
+                  <Tooltip title="Mic Off">
+                    <IconButton style={{background: '#64379f'}} onClick={onToggleAudio}>
                       <Mic fontSize="small" style={{color: '#ddacf5'}} />
                     </IconButton>
                   </Tooltip>
