@@ -28,10 +28,13 @@
 
       .stream-area {
         height: 30rem;
+        display: flex;
+        justify-content: center;
 
         .stream-video {
-          width: 100%;
+          width: auto;
           height: 100%;
+          border-radius: 20px;
         }
       }
 
@@ -42,6 +45,46 @@
         width: 100%;
         height: 100%;
         z-index: 1;
+        display: flex;
+        flex-direction: column-reverse;
+
+        .inner-stream-buttons-area {
+          display: flex;
+          padding: 1rem 0;
+
+          .icon-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+
+  .join-area {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+
+    #join-button {
+      background: #fefefe;
+      color: $color-secondary;
+      padding: 0.4rem 1.4rem;
+      border: 1px solid $color-primary;
+      border-radius: 50px;
+      font-size: 1.4rem;
+      transition: background-color 0.2s, color 0.2s;
+      transition-timing-function: ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+        background: transparent;
+        color: #fefefe;
+      }
+
+      @media (max-width: 600px) {
+        display: inline-block;
       }
     }
   }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UserNameInput } from '../MaterialComponents';
+import { IconButton, Tooltip } from '@material-ui/core';
+import { Videocam, Mic } from '@material-ui/icons';
 import '../../styles/PreRoom.scss';
 
 function PreRoom({ setIsRoomActive, setUsername }) {
@@ -17,9 +19,6 @@ function PreRoom({ setIsRoomActive, setUsername }) {
       videoRef.current.srcObject = stream;
       videoRef.current.addEventListener("loadedmetadata", () => {
         videoRef.current.play();
-        stream.getTracks().forEach(track => track.stop());
-        videoRef.current.srcObject = null;
-        setStream(null);
       });
     })
   }, [])
@@ -38,9 +37,27 @@ function PreRoom({ setIsRoomActive, setUsername }) {
               <video ref={videoRef} className="stream-video"></video>
             </div>
             <div className="stream-buttons-area">
-
+              <div className="inner-stream-buttons-area">
+                <div className="icon-container">
+                  <Tooltip title="Video Off">
+                    <IconButton style={{background: '#64379f'}}>
+                      <Videocam fontSize="small" style={{color: '#ddacf5'}} />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+                <div className="icon-container">
+                  <Tooltip title="Video Off">
+                    <IconButton style={{background: '#64379f'}}>
+                      <Mic fontSize="small" style={{color: '#ddacf5'}} />
+                    </IconButton>
+                  </Tooltip>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
+        <div className="join-area">
+          <button id="join-button">Join Meeting</button>
         </div>
       </div>
     </>
