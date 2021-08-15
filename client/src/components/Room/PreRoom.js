@@ -1,31 +1,58 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { UserNameInput } from '../MaterialComponents';
 import { IconButton, Tooltip } from '@material-ui/core';
-import { Videocam, Mic } from '@material-ui/icons';
+import { Videocam, Mic, MicOff, VideocamOff } from '@material-ui/icons';
 import '../../styles/PreRoom.scss';
 
 function PreRoom({ setIsRoomActive, setUsername }) {
   const [stream, setStream] = useState(null);
+  const [isAudio, setIsAudio] = useState(false);
+  const [isVideo, setIsVideo] = useState(false);
   const videoRef = useRef(null);
 
   useEffect(() => {
+    startStream(true);
+  }, []);
+
+  // Function to start the media stream.
+  // @param(isAudioEnabled): To set the initial state of the audio when the stream starts
+  const startStream = (isAudioEnabled) => {
     navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true
     })
     .then((stream) => {
       setStream(stream);
+      setIsVideo(true);
+      
+      stream.getAudioTracks()[0].enabled = isAudioEnabled;
+      setIsAudio(isAudioEnabled);
 
       videoRef.current.srcObject = stream;
       videoRef.current.addEventListener("loadedmetadata", () => {
         videoRef.current.play();
       });
     })
-  }, []);
+  }
+
+  const onToggleVideo = () => {
+    if (!isVideo) {
+      // If resuming the video stream, first remove the old stream,
+      // then start a new one with the old state of audio
+      videoRef.current.srcObject = null;
+      setStream(null);
+      startStream(isAudio);
+    }
+    else {
+      // If pausing the video stream, simply stop the video stream
+      stream.getVideoTracks()[0].stop();
+      setIsVideo(!isVideo);
+    }
+  }
 
   const onToggleAudio = () => {
     stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0].enabled;
-    console.log(stream.getAudioTracks()[0].enabled);
+    setIsAudio(!isAudio);
   }
 
   return (
@@ -45,15 +72,15 @@ function PreRoom({ setIsRoomActive, setUsername }) {
               <div className="inner-stream-buttons-area">
                 <div className="icon-container">
                   <Tooltip title="Video Off">
-                    <IconButton style={{background: '#64379f'}}>
-                      <Videocam fontSize="small" style={{color: '#ddacf5'}} />
+                    <IconButton style={{background: isVideo ? '#64379f' : 'red'}} onClick={onToggleVideo}>
+                    {isVideo ? (<Videocam fontSize="small" style={{color: '#ddacf5'}} />) : (<VideocamOff fontSize="small" style={{color: '#ddacf5'}} />)}
                     </IconButton>
                   </Tooltip>
                 </div>
                 <div className="icon-container">
                   <Tooltip title="Mic Off">
-                    <IconButton style={{background: '#64379f'}} onClick={onToggleAudio}>
-                      <Mic fontSize="small" style={{color: '#ddacf5'}} />
+                    <IconButton style={{background: isAudio ? '#64379f' : 'red'}} onClick={onToggleAudio}>
+                      {isAudio ? (<Mic fontSize="small" style={{color: '#ddacf5'}} />) : (<MicOff fontSize="small" style={{color: '#ddacf5'}} />)}
                     </IconButton>
                   </Tooltip>
                 </div>
