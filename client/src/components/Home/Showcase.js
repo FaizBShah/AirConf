@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../styles/Showcase.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 function Showcase() {
   return (
@@ -8,7 +9,7 @@ function Showcase() {
         <div className="join-area">
           <h1 className="content-title">Fast Conference Meetings. From Anytime and Anywhere.</h1>
           <p className="content-text">Enjoy fast video meetings and chat with your friends, teams and family without the hassle of logging in. And that too for free!!</p>
-          <a href="/room/1" id="join-button" >Join Meeting</a>
+          <a href={`/room/${uuidv4()}`} id="join-button" >Join Meeting</a>
         </div>
         <div className="about-area">
           <h1 className="about-title">Features of AirConf</h1>
