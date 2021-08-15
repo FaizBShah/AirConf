@@ -9,7 +9,7 @@ function Room() {
 
   return (
     <>
-      {isRoomActive ? (<RoomLayout username={username} />) : (<PreRoom setIsRoomActive={setIsRoomActive} setUsername={setUsername} />)}
+      {isRoomActive ? (<RoomLayout username={username} />) : (<PreRoom setIsRoomActive={setIsRoomActive} username={username} setUsername={setUsername} />)}
     </>
   )
 }

@@ -4,7 +4,7 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, MicOff, VideocamOff } from '@material-ui/icons';
 import '../../styles/PreRoom.scss';
 
-function PreRoom({ setIsRoomActive, setUsername }) {
+function PreRoom({ setIsRoomActive, username, setUsername }) {
   const [stream, setStream] = useState(null);
   const [isAudio, setIsAudio] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
@@ -55,12 +55,23 @@ function PreRoom({ setIsRoomActive, setUsername }) {
     setIsAudio(!isAudio);
   }
 
+  const onJoinRoom = () => {
+    if (username.length > 0) {
+      setIsRoomActive(true);
+    }
+  }
+
   return (
     <>
       <div className="preroom-main-area">
         <div className="username-area">
           <div className="username-input-area">
-            <UserNameInput required label="Enter username" />
+            <UserNameInput
+              required 
+              label="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
           </div>
         </div>
         <div className="info-area">
@@ -89,7 +100,7 @@ function PreRoom({ setIsRoomActive, setUsername }) {
           </div>
         </div>
         <div className="join-area">
-          <button id="join-button">Join Meeting</button>
+          <button id="join-button" onClick={onJoinRoom}>Join Meeting</button>
         </div>
       </div>
     </>
