@@ -6,24 +6,28 @@ import Meeting from './meeting/Meeting';
 
 const ENDPOINT = "http://localhost:5000";
 
-function RoomLayout() {
+function RoomLayout({ stream, setStream }) {
   const [chatOpen, setChatOpen] = useState(false);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = socketIOClient(ENDPOINT);
-
-    socket.on("message", (message) => {
-      console.log(message);
+    setSocket(socketIOClient(ENDPOINT), () => {
+      socket.on("message", (message) => {
+        console.log(message);
+      });
     });
 
-    return () => socket.disconnect();
+    return () => {
+      socket.disconnect();
+      setSocket(null);
+    }
   }, []);
 
   return (
     <>
-      <Meeting chatOpen={chatOpen} />
-      <BottomMenu chatOpen={chatOpen} setChatOpen={setChatOpen} />
-      <Chat open={chatOpen} setChatOpen={setChatOpen} />
+      <Meeting socket={socket} chatOpen={chatOpen} />
+      <BottomMenu socket={socket} chatOpen={chatOpen} setChatOpen={setChatOpen} />
+      <Chat socket={socket} open={chatOpen} setChatOpen={setChatOpen} />
     </>
   )
 }
