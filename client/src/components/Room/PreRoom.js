@@ -4,10 +4,10 @@ import { IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, MicOff, VideocamOff } from '@material-ui/icons';
 import '../../styles/PreRoom.scss';
 
-function PreRoom({ setIsRoomActive, username, setUsername }) {
-  const [stream, setStream] = useState(null);
+function PreRoom({ setIsRoomActive, username, setUsername, stream, setStream }) {
   const [isAudio, setIsAudio] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
+  const [error, setError] = useState("");
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -56,9 +56,13 @@ function PreRoom({ setIsRoomActive, username, setUsername }) {
   }
 
   const onJoinRoom = () => {
-    if (username.length > 0) {
-      setIsRoomActive(true);
+    if (username.trim().length < 3 || username.trim().length >= 25) {
+      setError("Username should be between 3 and 24 characters long");
+      return;
     }
+
+    setError("");
+    setIsRoomActive(true);
   }
 
   return (
@@ -70,6 +74,7 @@ function PreRoom({ setIsRoomActive, username, setUsername }) {
               required 
               label="Enter username"
               value={username}
+              helperText={error}
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
