@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../../styles/Video.scss';
 import { Tooltip, IconButton } from '@material-ui/core';
 import { MicOff, AccountCircle } from '@material-ui/icons';
 
 function Video({ stream }) {
-  const [isVideoOn, setIsVideoOn] = useState(false);
+  const [isVideoOn, setIsVideoOn] = useState(true);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    console.log(stream);
+    videoRef.current.srcObject = stream;
+    videoRef.current.addEventListener("loadedmetadata", () => {
+      videoRef.current.play();
+    });
+  }, [stream]);
 
   return (
     <>
       <div className="video-card" style={{minHeight: !isVideoOn ? '14rem' : 'auto'}}>
         {isVideoOn && (
-          <video className="video-stream" src={stream}>
+          <video ref={videoRef} className="video-stream" src={stream}>
             Sorry, there was an error in displaying the stream
           </video>
         )}

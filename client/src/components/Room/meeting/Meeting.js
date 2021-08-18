@@ -7,11 +7,10 @@ import { Share, Close } from '@material-ui/icons';
 import { Notification } from '../../MaterialComponents';
 import Video from './Video';
 
-function Meeting({ chatOpen }) {
+function Meeting({ chatOpen, videos }) {
   const [roomId, setRoomId] = useState("");
   const [notificationOpen, setNotificationOpen] = useState(false);
   const { width } = useWindowDimensions();
-  const videos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 , 14];
 
   useEffect(() => {
     setRoomId(getRoomId(window.location.pathname));
@@ -68,7 +67,7 @@ function Meeting({ chatOpen }) {
                 md={6}
                 xs={12}
               >
-                <Video stream="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/360/Big_Buck_Bunny_360_10s_1MB.mp4" />
+                <Video stream={video.stream} />
               </Grid>
             ))}
           </Grid>
