@@ -7,10 +7,13 @@ function Video({ video: { username, stream } }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
+    const video = videoRef.current;
     videoRef.current.srcObject = stream;
     videoRef.current.addEventListener("loadedmetadata", () => {
       videoRef.current.play();
     });
+
+    return () => video.srcObject = null;
   }, [stream]);
 
   return (

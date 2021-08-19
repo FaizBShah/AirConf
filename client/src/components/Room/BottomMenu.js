@@ -5,17 +5,47 @@ import { Videocam, Mic, MicOff, VideocamOff, Forum, ExitToApp } from '@material-
 import { useWindowDimensions } from '../../utils/windowUtils';
 import { getChatWidth } from '../../utils/getChatWidth';
 
-function BottomMenu({ chatOpen, setChatOpen, stream, setStream }) {
+function BottomMenu({ chatOpen, setChatOpen, stream, setStream, videos, setVideos, username }) {
   const { width } = useWindowDimensions();
   const [isVideo, setIsVideo] = useState(stream.getVideoTracks()[0].readyState === 'live');
   const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
 
   const onToggleVideo = () => {
-    setIsVideo(!isVideo);
+    if (!isVideo) {
+      navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: true
+      })
+      .then((stream) => {
+        setStream(stream);
+
+        const temp = [...videos];
+        temp.shift();
+        temp.unshift({ username, stream });
+        setVideos(temp);
+
+        setIsVideo(true);
+        
+        stream.getAudioTracks()[0].enabled = isAudio;
+        setIsAudio(isAudio);
+      })
+    }
+    else {
+      stream.getVideoTracks()[0].stop();
+
+      const temp = [...videos];
+      temp.shift();
+      temp.unshift({ username, stream });
+      setVideos(temp);
+
+      setIsVideo(!isVideo);
+    }
   }
 
   const onToggleAudio = () => {
-    setIsAudio(!isAudio);
+    stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0].enabled;
+    console.log(stream.getAudioTracks()[0].enabled);
+    setIsAudio(stream.getAudioTracks()[0].enabled);
   }
  
   return (
