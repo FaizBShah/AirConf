@@ -67,7 +67,7 @@ function Meeting({ chatOpen, videos }) {
                 md={6}
                 xs={12}
               >
-                <Video stream={video.stream} />
+                <Video video={video} />
               </Grid>
             ))}
           </Grid>
