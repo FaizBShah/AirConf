@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../styles/BottomMenu.scss';
 import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
-import { Videocam, Mic, Forum, ExitToApp } from '@material-ui/icons';
+import { Videocam, Mic, MicOff, VideocamOff, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
 import { getChatWidth } from '../../utils/getChatWidth';
 
-function BottomMenu({ chatOpen, setChatOpen }) {
+function BottomMenu({ chatOpen, setChatOpen, stream, setStream }) {
   const { width } = useWindowDimensions();
+  const [isVideo, setIsVideo] = useState(stream.getVideoTracks()[0].readyState === 'live');
+  const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
 
+  const onToggleVideo = () => {
+    setIsVideo(!isVideo);
+  }
+
+  const onToggleAudio = () => {
+    setIsAudio(!isAudio);
+  }
+ 
   return (
     <div id='bottom-menu' style={{width: chatOpen ? `calc(100% - ${getChatWidth(width)})` : '100%'}}>
       <Container maxWidth='lg' style={{height: '100%'}}>
@@ -23,9 +33,9 @@ function BottomMenu({ chatOpen, setChatOpen }) {
             xs={width > 768 ? 2 : 3}
           >
             <div className="icon-container">
-              <Tooltip title="Video Off">
-                <IconButton style={{background: '#ddacf5'}}>
-                  <Videocam fontSize="small" style={{color: '#64379f'}} />
+              <Tooltip title={isVideo ? "Video On" : "Video Off"}>
+                <IconButton style={{background: isVideo ? '#ddacf5' : 'red'}} disabled={!stream} onClick={onToggleVideo}>
+                  {isVideo ? (<Videocam fontSize="small" style={{color: '#64379f'}} />) : (<VideocamOff fontSize="small" style={{color: '#ddacf5'}} />)}
                 </IconButton>
               </Tooltip>
             </div>
@@ -35,9 +45,9 @@ function BottomMenu({ chatOpen, setChatOpen }) {
             xs={width > 768 ? 2 : 3}
           >
             <div className="icon-container">
-              <Tooltip title="Unmute mic">
-                <IconButton style={{background: '#ddacf5'}}>
-                  <Mic fontSize="small" style={{color: '#64379f'}} />
+              <Tooltip title={isAudio ? "Mic On" : "Mic Off"}>
+                <IconButton style={{background: isAudio ? '#ddacf5' : 'red'}} disabled={!stream} onClick={onToggleAudio}>
+                  {isAudio ? (<Mic fontSize="small" style={{color: '#64379f'}} />) : (<MicOff fontSize="small" style={{color: '#ddacf5'}} />)}
                 </IconButton>
               </Tooltip>
             </div>

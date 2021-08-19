@@ -28,7 +28,7 @@ function RoomLayout({ username, stream, setStream }) {
   return (
     <>
       <Meeting socket={socket} chatOpen={chatOpen} videos={videos} />
-      <BottomMenu socket={socket} chatOpen={chatOpen} setChatOpen={setChatOpen} />
+      <BottomMenu socket={socket} chatOpen={chatOpen} setChatOpen={setChatOpen} stream={stream} setStream={setStream} />
       <Chat socket={socket} open={chatOpen} setChatOpen={setChatOpen} />
     </>
   )
