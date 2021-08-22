@@ -100,7 +100,7 @@ function BottomMenu({ chatOpen, setChatOpen, stream, setStream, videos, setVideo
           >
             <div className="icon-container">
               <Tooltip title="Leave Meeting">
-                <IconButton href="/" style={{background: '#ddacf5'}}>
+                <IconButton href={window.location.href} style={{background: '#ddacf5'}}>
                   <ExitToApp fontSize="small" style={{color: '#64379f'}} />
                 </IconButton>
               </Tooltip>
