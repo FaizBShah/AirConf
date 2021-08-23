@@ -1,10 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../../styles/Video.scss';
 import { Tooltip, IconButton } from '@material-ui/core';
-import { MicOff, AccountCircle } from '@material-ui/icons';
+import { Mic, MicOff, AccountCircle } from '@material-ui/icons';
 
 function Video({ video: { username, stream } }) {
   const videoRef = useRef(null);
+  const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -24,9 +25,9 @@ function Video({ video: { username, stream } }) {
         </video>
         <div className="video-info" style={{background: !(stream.getVideoTracks()[0].readyState === 'live') ? '#64379f' : 'transparent'}}>
           <div className="info-header">
-            <Tooltip title="Muted">
-              <IconButton style={{background: 'rgba(0, 0, 0, 0.3)', margin: '0.2rem', height: '2rem', width: '2rem'}}>
-                <MicOff style={{color: 'white', fontSize: '14px'}} />
+            <Tooltip title={isAudio ? "Mic On" : "Mic Off"}>
+              <IconButton style={{background: isAudio ? 'rgba(0, 0, 0, 0.3)' : 'rgba(221, 0, 0, 1)', margin: '0.2rem', height: '2rem', width: '2rem'}}>
+                {isAudio ? (<Mic style={{color: 'white', fontSize: '14px'}} />) : (<MicOff style={{color: 'white', fontSize: '14px'}} />)}
               </IconButton>
             </Tooltip>
           </div>
