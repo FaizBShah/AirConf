@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import '../../../styles/Meeting.scss';
 import { useWindowDimensions } from '../../../utils/windowUtils';
 import { getChatWidth } from '../../../utils/getChatWidth';
@@ -7,18 +7,9 @@ import { Share, Close } from '@material-ui/icons';
 import { Notification } from '../../MaterialComponents';
 import Video from './Video';
 
-function Meeting({ chatOpen, videos }) {
-  const [roomId, setRoomId] = useState("");
+function Meeting({ chatOpen, videos, roomId }) {
   const [notificationOpen, setNotificationOpen] = useState(false);
   const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    setRoomId(getRoomId(window.location.pathname));
-  }, []);
-
-  const getRoomId = (path) => {
-    return path.split('/')[2];
-  }
 
   const copyRoomId = () => {
     const el = document.createElement('textarea');
