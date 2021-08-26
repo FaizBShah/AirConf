@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import BottomMenu from './BottomMenu';
 import { io } from 'socket.io-client';
 import Chat from './chat/Chat';
@@ -10,20 +10,27 @@ const ENDPOINT = "http://localhost:5000";
 function RoomLayout({ username, stream, setStream }) {
   const [roomId, setRoomId] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  let socket;
-  let peer;
+  const ref = useRef({
+    socket: null,
+    peer: null
+  });
+  
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     setRoomId(getRoomId(window.location.pathname));
     setVideos([{ username, stream }, ...videos]);
-    peer = new Peer(undefined, {
+
+    ref.current.peer = new Peer(undefined, {
       path: '/peerjs',
       host: window.location.hostname,
       port: '5000'
     });
 
-    socket = io(ENDPOINT);
+    ref.current.socket = io(ENDPOINT);
+
+    const peer = ref.current.peer;
+    const socket = ref.current.socket;
 
     socket.on("message", (message) => {
       console.log(message);
@@ -48,9 +55,9 @@ function RoomLayout({ username, stream, setStream }) {
 
   return (
     <>
-      <Meeting socket={socket} chatOpen={chatOpen} videos={videos} roomId={roomId} />
+      <Meeting socket={ref.current.socket} chatOpen={chatOpen} videos={videos} roomId={roomId} />
       <BottomMenu
-        socket={socket}
+        socket={ref.current.socket}
         chatOpen={chatOpen}
         setChatOpen={setChatOpen}
         stream={stream}
@@ -59,7 +66,7 @@ function RoomLayout({ username, stream, setStream }) {
         setVideos={setVideos}
         username={username}
       />
-      <Chat socket={socket} open={chatOpen} setChatOpen={setChatOpen} />
+      <Chat socket={ref.current.socket} open={chatOpen} setChatOpen={setChatOpen} />
     </>
   )
 }
