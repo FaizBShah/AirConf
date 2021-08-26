@@ -39,7 +39,15 @@ function RoomLayout({ username, stream, setStream }) {
     socket.on("user-connected", (id, username) => {
       console.log(id);
       console.log(username);
+      connectToNewUser(id, username, stream, peer, socket);
     });
+
+    peer.on("call", (call) => {
+      call.answer(stream);
+      call.on("stream", (recepientStream) => {
+        console.log(recepientStream);
+      })
+    })
 
     peer.on("open", (id) => {
       console.log("Hello");
@@ -48,6 +56,13 @@ function RoomLayout({ username, stream, setStream }) {
 
     return () => socket.disconnect();
   }, []);
+
+  const connectToNewUser = (userId, username, stream, peer, socket) => {
+    const call = peer.call(userId, stream);
+    call.on("stream", (recepientStream) => {
+      console.log(recepientStream);
+    });
+  }
 
   const getRoomId = (path) => {
     return path.split('/')[2];
