@@ -10,16 +10,15 @@ const ENDPOINT = "http://localhost:5000";
 function RoomLayout({ username, stream, setStream }) {
   const [roomId, setRoomId] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
+  const [videos, setVideos] = useState([{ id: -1, username, stream }]);
   const ref = useRef({
     socket: null,
-    peer: null
+    peer: null,
+    userId: ''
   });
-  
-  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     setRoomId(getRoomId(window.location.pathname));
-    setVideos([{ username, stream }, ...videos]);
 
     ref.current.peer = new Peer(undefined, {
       path: '/peerjs',
@@ -37,30 +36,84 @@ function RoomLayout({ username, stream, setStream }) {
     });
 
     socket.on("user-connected", (id, username) => {
-      console.log(id);
-      console.log(username);
       connectToNewUser(id, username, stream, peer, socket);
     });
 
     peer.on("call", (call) => {
       call.answer(stream);
       call.on("stream", (recepientStream) => {
-        console.log(recepientStream);
-      })
-    })
+        socket.on("get-info", (srcId, destId, username, streamInfo) => {
+          if (ref.current.userId === destId) {
+            if (streamInfo.video === 'ended') {
+              recepientStream.getVideoTracks()[0].stop();
+            }
+
+            if (!streamInfo.audio) {
+              recepientStream.getAudioTracks()[0].enabled = false;
+            }
+
+            setVideos([...videos, { id: srcId, username, stream: recepientStream }]);
+          }
+        });
+        
+        socket.emit("set-info", ref.current.userId, call.peer, username, { video: stream.getVideoTracks()[0].readyState, audio: stream.getAudioTracks()[0].enabled });
+      });
+    });
 
     peer.on("open", (id) => {
-      console.log("Hello");
+      ref.current.userId = id;
       socket.emit("join-room", getRoomId(window.location.pathname), id, username);
     });
 
     return () => socket.disconnect();
   }, []);
 
-  const connectToNewUser = (userId, username, stream, peer, socket) => {
+  const connectToNewUser = (userId, name, stream, peer, socket) => {
     const call = peer.call(userId, stream);
+    let info, recStream;
+
+    socket.on("get-info", (srcId, destId, username, streamInfo) => {
+      if (call.peer === srcId && ref.current.userId === destId) {
+        info = streamInfo;
+
+        if (recStream) {
+          if (info.video === 'ended') {
+            recStream.getVideoTracks()[0].stop();
+          }
+  
+          if (!info.audio) {
+            recStream.getAudioTracks()[0].enabled = false;
+          }
+  
+          const temp = [...videos];
+          console.log(temp);
+          temp.push({ id: userId, username: name, stream: recStream });
+          console.log(temp);
+          setVideos(temp);
+        }
+      }
+    });
+
     call.on("stream", (recepientStream) => {
-      console.log(recepientStream);
+      recStream = recepientStream;
+
+      if (info) {
+        if (info.video === 'ended') {
+          recStream.getVideoTracks()[0].stop();
+        }
+
+        if (!info.audio) {
+          recStream.getAudioTracks()[0].enabled = false;
+        }
+
+        const temp = [...videos];
+        console.log(temp);
+        temp.push({ id: userId, username: name, stream: recStream });
+        console.log(temp);
+        setVideos(temp);
+      }
+
+      socket.emit("set-info", ref.current.userId, userId, username, { video: stream.getVideoTracks()[0].readyState, audio: stream.getAudioTracks()[0].enabled });
     });
   }
 

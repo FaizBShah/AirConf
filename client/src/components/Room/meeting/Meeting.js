@@ -57,6 +57,7 @@ function Meeting({ chatOpen, videos, roomId }) {
                 lg={3}
                 md={6}
                 xs={12}
+                key={video.id}
               >
                 <Video video={video} />
               </Grid>
