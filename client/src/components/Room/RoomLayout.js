@@ -4,20 +4,26 @@ import { io } from 'socket.io-client';
 import Chat from './chat/Chat';
 import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
+import { useAppContext } from '../../context/store';
 
 const ENDPOINT = "http://localhost:5000";
 
 function RoomLayout({ username, stream, setStream }) {
   const [roomId, setRoomId] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  const [videos, setVideos] = useState([{ id: -1, username, stream }]);
+  const { state: { videos }, dispatch } = useAppContext();
   const ref = useRef({
     socket: null,
     peer: null,
-    userId: ''
+    userId: '',
+    currVideos: new Set()
   });
 
   useEffect(() => {
+    dispatch({
+      type: "ADD_VIDEO",
+      payload: { id: -1, username, stream }
+    });
     setRoomId(getRoomId(window.location.pathname));
 
     ref.current.peer = new Peer(undefined, {
@@ -52,7 +58,13 @@ function RoomLayout({ username, stream, setStream }) {
               recepientStream.getAudioTracks()[0].enabled = false;
             }
 
-            setVideos([...videos, { id: srcId, username, stream: recepientStream }]);
+            if (!ref.current.currVideos.has(srcId)) {
+              dispatch({
+                type: "ADD_VIDEO",
+                payload: { id: srcId, username, stream: recepientStream }
+              });
+              ref.current.currVideos.add(srcId);
+            }
           }
         });
         
@@ -85,11 +97,13 @@ function RoomLayout({ username, stream, setStream }) {
             recStream.getAudioTracks()[0].enabled = false;
           }
   
-          const temp = [...videos];
-          console.log(temp);
-          temp.push({ id: userId, username: name, stream: recStream });
-          console.log(temp);
-          setVideos(temp);
+          if (!ref.current.currVideos.has(userId)) {
+            dispatch({
+              type: "ADD_VIDEO",
+              payload: { id: userId, username: name, stream: recStream }
+            });
+            ref.current.currVideos.add(userId);
+          }
         }
       }
     });
@@ -106,11 +120,13 @@ function RoomLayout({ username, stream, setStream }) {
           recStream.getAudioTracks()[0].enabled = false;
         }
 
-        const temp = [...videos];
-        console.log(temp);
-        temp.push({ id: userId, username: name, stream: recStream });
-        console.log(temp);
-        setVideos(temp);
+        if (!ref.current.currVideos.has(userId)) {
+          dispatch({
+            type: "ADD_VIDEO",
+            payload: { id: userId, username: name, stream: recStream }
+          });
+          ref.current.currVideos.add(userId);
+        }
       }
 
       socket.emit("set-info", ref.current.userId, userId, username, { video: stream.getVideoTracks()[0].readyState, audio: stream.getAudioTracks()[0].enabled });
@@ -131,7 +147,6 @@ function RoomLayout({ username, stream, setStream }) {
         stream={stream}
         setStream={setStream}
         videos={videos}
-        setVideos={setVideos}
         username={username}
       />
       <Chat socket={ref.current.socket} open={chatOpen} setChatOpen={setChatOpen} />
