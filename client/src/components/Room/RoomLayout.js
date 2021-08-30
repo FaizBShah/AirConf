@@ -5,6 +5,7 @@ import Chat from './chat/Chat';
 import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
 import { useAppContext } from '../../context/store';
+import { addVideo } from '../../actions/videoActions';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -20,10 +21,7 @@ function RoomLayout({ username, stream, setStream }) {
   });
 
   useEffect(() => {
-    dispatch({
-      type: "ADD_VIDEO",
-      payload: { id: -1, username, stream }
-    });
+    addVideo({ id: -1, username, stream }, dispatch);
     setRoomId(getRoomId(window.location.pathname));
 
     ref.current.peer = new Peer(undefined, {
@@ -59,10 +57,7 @@ function RoomLayout({ username, stream, setStream }) {
             }
 
             if (!ref.current.currVideos.has(srcId)) {
-              dispatch({
-                type: "ADD_VIDEO",
-                payload: { id: srcId, username, stream: recepientStream }
-              });
+              addVideo({ id: srcId, username, stream: recepientStream }, dispatch);
               ref.current.currVideos.add(srcId);
             }
           }
@@ -98,10 +93,7 @@ function RoomLayout({ username, stream, setStream }) {
           }
   
           if (!ref.current.currVideos.has(userId)) {
-            dispatch({
-              type: "ADD_VIDEO",
-              payload: { id: userId, username: name, stream: recStream }
-            });
+            addVideo({ id: userId, username: name, stream: recStream }, dispatch);
             ref.current.currVideos.add(userId);
           }
         }
@@ -121,10 +113,7 @@ function RoomLayout({ username, stream, setStream }) {
         }
 
         if (!ref.current.currVideos.has(userId)) {
-          dispatch({
-            type: "ADD_VIDEO",
-            payload: { id: userId, username: name, stream: recStream }
-          });
+          addVideo({ id: userId, username: name, stream: recStream }, dispatch);
           ref.current.currVideos.add(userId);
         }
       }
