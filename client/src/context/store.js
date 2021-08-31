@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
-import { ADD_VIDEO } from './types';
+import { ADD_VIDEO, REPLACE_STREAM } from './types';
 
 const AppContext = createContext();
 
@@ -13,6 +13,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         videos: [...state.videos, action.payload]
+      };
+    
+    case REPLACE_STREAM:
+      const tempArr = [...state.videos];
+      const videoIndex = tempArr.findIndex(video => video.id === action.payload.id);
+      tempArr[videoIndex].stream = action.payload.stream;
+      
+      return {
+        ...state,
+        videos: tempArr
       };
 
     default:

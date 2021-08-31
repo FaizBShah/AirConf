@@ -4,8 +4,9 @@ import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, MicOff, VideocamOff, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
 import { getChatWidth } from '../../utils/getChatWidth';
+import { replaceStream } from '../../actions/videoActions';
 
-function BottomMenu({ chatOpen, setChatOpen, stream, setStream, videos, setVideos, username }) {
+function BottomMenu({ chatOpen, setChatOpen, stream, setStream, dispatch }) {
   const { width } = useWindowDimensions();
   const [isVideo, setIsVideo] = useState(stream.getVideoTracks()[0].readyState === 'live');
   const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
@@ -19,10 +20,7 @@ function BottomMenu({ chatOpen, setChatOpen, stream, setStream, videos, setVideo
       .then((stream) => {
         setStream(stream);
 
-        const temp = [...videos];
-        temp.shift();
-        temp.unshift({ username, stream });
-        setVideos(temp);
+        replaceStream({ id: -1, stream }, dispatch);
 
         setIsVideo(true);
         
@@ -33,10 +31,7 @@ function BottomMenu({ chatOpen, setChatOpen, stream, setStream, videos, setVideo
     else {
       stream.getVideoTracks()[0].stop();
 
-      const temp = [...videos];
-      temp.shift();
-      temp.unshift({ username, stream });
-      setVideos(temp);
+      replaceStream({ id: -1, stream }, dispatch);
 
       setIsVideo(!isVideo);
     }

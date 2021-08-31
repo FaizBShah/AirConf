@@ -135,8 +135,7 @@ function RoomLayout({ username, stream, setStream }) {
         setChatOpen={setChatOpen}
         stream={stream}
         setStream={setStream}
-        videos={videos}
-        username={username}
+        dispatch={dispatch}
       />
       <Chat socket={ref.current.socket} open={chatOpen} setChatOpen={setChatOpen} />
     </>
