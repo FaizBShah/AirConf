@@ -6,7 +6,7 @@ import { useWindowDimensions } from '../../utils/windowUtils';
 import { getChatWidth } from '../../utils/getChatWidth';
 import { replaceStream } from '../../actions/videoActions';
 
-function BottomMenu({ chatOpen, setChatOpen, stream, setStream, dispatch }) {
+function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, setStream, dispatch }) {
   const { width } = useWindowDimensions();
   const [isVideo, setIsVideo] = useState(stream.getVideoTracks()[0].readyState === 'live');
   const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
@@ -39,7 +39,7 @@ function BottomMenu({ chatOpen, setChatOpen, stream, setStream, dispatch }) {
 
   const onToggleAudio = () => {
     stream.getAudioTracks()[0].enabled = !stream.getAudioTracks()[0].enabled;
-    console.log(stream.getAudioTracks()[0].enabled);
+    socket.emit("set-audio", userId, stream.getAudioTracks()[0].enabled);
     setIsAudio(stream.getAudioTracks()[0].enabled);
   }
  

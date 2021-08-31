@@ -3,9 +3,17 @@ import '../../../styles/Video.scss';
 import { Tooltip, IconButton } from '@material-ui/core';
 import { Mic, MicOff, AccountCircle } from '@material-ui/icons';
 
-function Video({ video: { username, stream } }) {
+function Video({ video: { id, username, stream }, socket, userId }) {
   const videoRef = useRef(null);
   const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
+
+  useEffect(() => {
+    socket.on("get-audio", (recId, isAudio) => {
+      if (recId === id || (recId === userId && id === -1)) {
+        setIsAudio(isAudio);
+      }
+    });
+  }, [socket, id, userId]);
 
   useEffect(() => {
     const video = videoRef.current;

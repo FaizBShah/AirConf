@@ -128,12 +128,13 @@ function RoomLayout({ username, stream, setStream }) {
 
   return (
     <>
-      <Meeting socket={ref.current.socket} chatOpen={chatOpen} videos={videos} roomId={roomId} />
+      <Meeting socket={ref.current.socket} chatOpen={chatOpen} videos={videos} roomId={roomId} userId={ref.current.userId} />
       <BottomMenu
         socket={ref.current.socket}
         chatOpen={chatOpen}
         setChatOpen={setChatOpen}
         stream={stream}
+        userId={ref.current.userId}
         setStream={setStream}
         dispatch={dispatch}
       />

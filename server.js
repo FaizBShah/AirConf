@@ -29,7 +29,11 @@ io.on('connection', (socket) => {
     socket.on("set-info", (srcId, destId, username, streamInfo) => {
       console.log(username, srcId);
       socket.to(roomId).emit("get-info", srcId, destId, username, streamInfo);
-    })
+    });
+
+    socket.on("set-audio", (userId, isAudio) => {
+      io.to(roomId).emit("get-audio", userId, isAudio);
+    });
   });
 
   socket.on('disconnect', () => {

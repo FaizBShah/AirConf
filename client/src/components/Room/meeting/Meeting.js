@@ -7,7 +7,7 @@ import { Share, Close } from '@material-ui/icons';
 import { Notification } from '../../MaterialComponents';
 import Video from './Video';
 
-function Meeting({ chatOpen, videos, roomId }) {
+function Meeting({ socket, chatOpen, videos, roomId, userId }) {
   const [notificationOpen, setNotificationOpen] = useState(false);
   const { width } = useWindowDimensions();
 
@@ -59,7 +59,7 @@ function Meeting({ chatOpen, videos, roomId }) {
                 xs={12}
                 key={video.id}
               >
-                <Video video={video} />
+                <Video video={video} socket={socket} userId={userId} />
               </Grid>
             ))}
           </Grid>
