@@ -5,8 +5,9 @@ import { Videocam, Mic, MicOff, VideocamOff, Forum, ExitToApp } from '@material-
 import { useWindowDimensions } from '../../utils/windowUtils';
 import { getChatWidth } from '../../utils/getChatWidth';
 import { replaceStream } from '../../actions/videoActions';
+import { setStream } from '../../actions/userActions';
 
-function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, setStream, dispatch }) {
+function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, dispatch }) {
   const { width } = useWindowDimensions();
   const [isVideo, setIsVideo] = useState(stream.getVideoTracks()[0].readyState === 'live');
   const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
@@ -18,7 +19,7 @@ function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, setStream, 
         audio: true
       })
       .then((stream) => {
-        setStream(stream);
+        setStream(stream, dispatch);
 
         replaceStream({ id: -1, stream }, dispatch);
 

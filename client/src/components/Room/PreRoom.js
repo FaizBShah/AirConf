@@ -3,12 +3,15 @@ import { UserNameInput } from '../MaterialComponents';
 import { IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, MicOff, VideocamOff } from '@material-ui/icons';
 import '../../styles/PreRoom.scss';
+import { useAppContext } from '../../context/store';
+import { setStream, setUsername } from '../../actions/userActions';
 
-function PreRoom({ setIsRoomActive, username, setUsername, stream, setStream }) {
+function PreRoom({ setIsRoomActive }) {
   const [isAudio, setIsAudio] = useState(false);
   const [isVideo, setIsVideo] = useState(false);
   const [error, setError] = useState("");
   const videoRef = useRef(null);
+  const { state: { username, stream }, dispatch } = useAppContext();
 
   useEffect(() => {
     startStream(true);
@@ -22,7 +25,7 @@ function PreRoom({ setIsRoomActive, username, setUsername, stream, setStream }) 
       audio: true
     })
     .then((stream) => {
-      setStream(stream);
+      setStream(stream, dispatch);
       setIsVideo(true);
       
       stream.getAudioTracks()[0].enabled = isAudioEnabled;
@@ -40,7 +43,7 @@ function PreRoom({ setIsRoomActive, username, setUsername, stream, setStream }) 
       // If resuming the video stream, first remove the old stream,
       // then start a new one with the old state of audio
       videoRef.current.srcObject = null;
-      setStream(null);
+      setStream(null, dispatch);
       startStream(isAudio);
     }
     else {
@@ -75,7 +78,7 @@ function PreRoom({ setIsRoomActive, username, setUsername, stream, setStream }) 
               label="Enter username"
               value={username}
               helperText={error}
-              onChange={(e) => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value, dispatch)}
             />
           </div>
         </div>

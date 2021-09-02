@@ -1,9 +1,11 @@
 import { createContext, useContext, useReducer } from 'react';
-import { ADD_VIDEO, REPLACE_STREAM } from './types';
+import { ADD_VIDEO, REPLACE_STREAM, SET_USERNAME, SET_USER_STREAM } from './types';
 
 const AppContext = createContext();
 
 const initialState = {
+  stream: null,
+  username: "",
   videos: []
 }
 
@@ -23,6 +25,18 @@ const reducer = (state, action) => {
       return {
         ...state,
         videos: tempArr
+      };
+
+    case SET_USER_STREAM:
+      return {
+        ...state,
+        stream: action.payload
+      };
+    
+    case SET_USERNAME:
+      return {
+        ...state,
+        username: action.payload
       };
 
     default:

@@ -9,10 +9,10 @@ import { addVideo } from '../../actions/videoActions';
 
 const ENDPOINT = "http://localhost:5000";
 
-function RoomLayout({ username, stream, setStream }) {
+function RoomLayout() {
   const [roomId, setRoomId] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  const { state: { videos }, dispatch } = useAppContext();
+  const { state: { username, stream, videos }, dispatch } = useAppContext();
   const ref = useRef({
     socket: null,
     peer: null,
@@ -135,7 +135,6 @@ function RoomLayout({ username, stream, setStream }) {
         setChatOpen={setChatOpen}
         stream={stream}
         userId={ref.current.userId}
-        setStream={setStream}
         dispatch={dispatch}
       />
       <Chat socket={ref.current.socket} open={chatOpen} setChatOpen={setChatOpen} />
