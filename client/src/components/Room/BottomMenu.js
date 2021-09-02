@@ -33,6 +33,7 @@ function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, dispatch })
       stream.getVideoTracks()[0].stop();
 
       replaceStream({ id: -1, stream }, dispatch);
+      socket.emit("set-video", userId, false);
 
       setIsVideo(!isVideo);
     }
