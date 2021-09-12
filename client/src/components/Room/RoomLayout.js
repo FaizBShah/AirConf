@@ -47,7 +47,7 @@ function RoomLayout() {
       call.answer(stream);
       call.on("stream", (recepientStream) => {
         socket.on("get-info", (srcId, destId, username, streamInfo) => {
-          if (ref.current.userId === destId) {
+          if (call.peer === srcId && ref.current.userId === destId) {
             if (streamInfo.video === 'ended') {
               recepientStream.getVideoTracks()[0].stop();
             }
