@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from 'react';
-import { ADD_VIDEO, REPLACE_STREAM, SET_USERNAME, SET_USER_STREAM } from './types';
+import { ADD_VIDEO, REPLACE_STREAM, RESET_ROOM, SET_USERNAME, SET_USER_STREAM } from './types';
 
 const AppContext = createContext();
 
@@ -25,6 +25,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         videos: tempArr
+      };
+
+    case RESET_ROOM:
+      return {
+        ...state,
+        videos: state.videos.filter(video => video.id === -1)
       };
 
     case SET_USER_STREAM:

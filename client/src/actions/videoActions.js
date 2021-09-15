@@ -1,4 +1,4 @@
-import { ADD_VIDEO, REPLACE_STREAM } from "../context/types";
+import { ADD_VIDEO, REPLACE_STREAM, RESET_ROOM } from "../context/types";
 
 export const addVideo = (video, dispatch) => {
   dispatch({
@@ -11,5 +11,11 @@ export const replaceStream = (newVideo, dispatch) => {
   dispatch({
     type: REPLACE_STREAM,
     payload: newVideo
+  });
+}
+
+export const resetRoom = (dispatch) => {
+  dispatch({
+    type: RESET_ROOM
   });
 }

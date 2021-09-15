@@ -27,7 +27,6 @@ io.on('connection', (socket) => {
     socket.to(roomId).emit("user-connected", id, username);
 
     socket.on("set-info", (srcId, destId, username, streamInfo) => {
-      console.log(username, srcId);
       socket.to(roomId).emit("get-info", srcId, destId, username, streamInfo);
     });
 
@@ -37,6 +36,10 @@ io.on('connection', (socket) => {
 
     socket.on("set-video", (userId, isVideo) => {
       io.to(roomId).emit("get-video", userId, isVideo);
+    });
+
+    socket.on("replace-stream", (userId, username) => {
+      socket.to(roomId).emit("stream-replaced", userId, username);
     });
   });
 

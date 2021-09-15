@@ -4,10 +4,10 @@ import { Container, Grid, IconButton, Tooltip } from '@material-ui/core';
 import { Videocam, Mic, MicOff, VideocamOff, Forum, ExitToApp } from '@material-ui/icons';
 import { useWindowDimensions } from '../../utils/windowUtils';
 import { getChatWidth } from '../../utils/getChatWidth';
-import { replaceStream } from '../../actions/videoActions';
+import { replaceStream, resetRoom } from '../../actions/videoActions';
 import { setStream } from '../../actions/userActions';
 
-function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, dispatch }) {
+function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, username, currVideos, dispatch }) {
   const { width } = useWindowDimensions();
   const [isVideo, setIsVideo] = useState(stream.getVideoTracks()[0].readyState === 'live');
   const [isAudio, setIsAudio] = useState(stream.getAudioTracks()[0].enabled);
@@ -21,12 +21,15 @@ function BottomMenu({ socket, chatOpen, setChatOpen, stream, userId, dispatch })
       .then((stream) => {
         setStream(stream, dispatch);
 
-        replaceStream({ id: -1, stream }, dispatch);
-
         setIsVideo(true);
         
         stream.getAudioTracks()[0].enabled = isAudio;
         setIsAudio(isAudio);
+
+        resetRoom(dispatch);
+        currVideos.clear();
+        replaceStream({ id: -1, stream }, dispatch);
+        socket.emit("replace-stream", userId, username);
       })
     }
     else {

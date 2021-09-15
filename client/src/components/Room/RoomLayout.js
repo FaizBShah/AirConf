@@ -5,7 +5,7 @@ import Chat from './chat/Chat';
 import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
 import { useAppContext } from '../../context/store';
-import { addVideo } from '../../actions/videoActions';
+import { addVideo, replaceStream } from '../../actions/videoActions';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -17,11 +17,16 @@ function RoomLayout() {
     socket: null,
     peer: null,
     userId: '',
-    currVideos: new Set()
+    currVideos: new Set(),
+    stream: stream
   });
 
   useEffect(() => {
-    addVideo({ id: -1, username, stream }, dispatch);
+    ref.current.stream = stream;
+  }, [stream]);
+
+  useEffect(() => {
+    addVideo({ id: -1, username, stream: ref.current.stream }, dispatch);
     setRoomId(getRoomId(window.location.pathname));
 
     ref.current.peer = new Peer(undefined, {
@@ -40,11 +45,15 @@ function RoomLayout() {
     });
 
     socket.on("user-connected", (id, username) => {
-      connectToNewUser(id, username, stream, peer, socket);
+      connectToNewUser(id, username, ref.current.stream, peer, socket);
+    });
+
+    socket.on("stream-replaced", (id, username) => {
+      replaceUserStream(id, username, ref.current.stream, peer, socket);
     });
 
     peer.on("call", (call) => {
-      call.answer(stream);
+      call.answer(ref.current.stream);
       call.on("stream", (recepientStream) => {
         socket.on("get-info", (srcId, destId, username, streamInfo) => {
           if (call.peer === srcId && ref.current.userId === destId) {
@@ -63,7 +72,7 @@ function RoomLayout() {
           }
         });
         
-        socket.emit("set-info", ref.current.userId, call.peer, username, { video: stream.getVideoTracks()[0].readyState, audio: stream.getAudioTracks()[0].enabled });
+        socket.emit("set-info", ref.current.userId, call.peer, username, { video: ref.current.stream.getVideoTracks()[0].readyState, audio: ref.current.stream.getAudioTracks()[0].enabled });
       });
     });
 
@@ -122,6 +131,49 @@ function RoomLayout() {
     });
   }
 
+  const replaceUserStream = (userId, name, stream, peer, socket) => {
+    const call = peer.call(userId, stream);
+    let info, recStream;
+
+    socket.on("get-info", (srcId, destId, username, streamInfo) => {
+      if (call.peer === srcId && ref.current.userId === destId) {
+        info = streamInfo;
+
+        if (recStream) {
+          if (info.video === 'ended') {
+            recStream.getVideoTracks()[0].stop();
+          }
+  
+          if (!info.audio) {
+            recStream.getAudioTracks()[0].enabled = false;
+          }
+  
+          replaceStream({ id: userId, stream: recStream }, dispatch);
+          ref.current.currVideos.add(userId);
+        }
+      }
+    });
+
+    call.on("stream", (recepientStream) => {
+      recStream = recepientStream;
+
+      if (info) {
+        if (info.video === 'ended') {
+          recStream.getVideoTracks()[0].stop();
+        }
+
+        if (!info.audio) {
+          recStream.getAudioTracks()[0].enabled = false;
+        }
+
+        replaceStream({ id: userId, stream: recStream }, dispatch);
+        ref.current.currVideos.add(userId);
+      }
+
+      socket.emit("set-info", ref.current.userId, userId, username, { video: stream.getVideoTracks()[0].readyState, audio: stream.getAudioTracks()[0].enabled });
+    });
+  }
+
   const getRoomId = (path) => {
     return path.split('/')[2];
   }
@@ -133,8 +185,10 @@ function RoomLayout() {
         socket={ref.current.socket}
         chatOpen={chatOpen}
         setChatOpen={setChatOpen}
-        stream={stream}
+        stream={ref.current.stream}
         userId={ref.current.userId}
+        username={username}
+        currVideos={ref.current.currVideos}
         dispatch={dispatch}
       />
       <Chat socket={ref.current.socket} open={chatOpen} setChatOpen={setChatOpen} />
