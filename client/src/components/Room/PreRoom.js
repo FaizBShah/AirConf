@@ -85,7 +85,7 @@ function PreRoom({ setIsRoomActive }) {
         <div className="info-area">
           <div className="inner-info-area">
             <div className="stream-area">
-              <video ref={videoRef} className="stream-video"></video>
+              <video ref={videoRef} className="stream-video" muted="muted"></video>
             </div>
             <div className="stream-buttons-area">
               <div className="inner-stream-buttons-area">
