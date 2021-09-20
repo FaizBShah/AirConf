@@ -21,10 +21,15 @@ io.on('connection', (socket) => {
   console.log("Connected");
   socket.emit("message", "Connected");
 
+  let currUserId, currRoom;
+
   socket.on("join-room", (roomId, id, username) => {
     console.log(roomId, id, username);
     socket.join(roomId);
     socket.to(roomId).emit("user-connected", id, username);
+
+    currUserId = id;
+    currRoom = roomId;
 
     socket.on("set-info", (srcId, destId, username, streamInfo) => {
       socket.to(roomId).emit("get-info", srcId, destId, username, streamInfo);
@@ -46,6 +51,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log("Disonnected");
     io.emit("message", "Disconnected");
+    socket.to(currRoom).emit("user-disconnected", currUserId);
   });
 });
 

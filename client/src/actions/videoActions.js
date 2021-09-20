@@ -1,4 +1,4 @@
-import { ADD_VIDEO, REPLACE_STREAM, RESET_ROOM } from "../context/types";
+import { ADD_VIDEO, DELETE_USER, REPLACE_STREAM, RESET_ROOM } from "../context/types";
 
 export const addVideo = (video, dispatch) => {
   dispatch({
@@ -17,5 +17,12 @@ export const replaceStream = (newVideo, dispatch) => {
 export const resetRoom = (dispatch) => {
   dispatch({
     type: RESET_ROOM
+  });
+}
+
+export const deleteUser = (userId, dispatch) => {
+  dispatch({
+    type: DELETE_USER,
+    payload: userId
   });
 }

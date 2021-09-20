@@ -5,7 +5,7 @@ import Chat from './chat/Chat';
 import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
 import { useAppContext } from '../../context/store';
-import { addVideo, replaceStream } from '../../actions/videoActions';
+import { addVideo, deleteUser, replaceStream } from '../../actions/videoActions';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -48,6 +48,12 @@ function RoomLayout() {
       connectToNewUser(id, username, ref.current.stream, peer, socket);
     });
 
+    socket.on("user-disconnected", (id) => {
+      console.log(id + " disconnected");
+      deleteUser(id, dispatch);
+      ref.current.currVideos.delete(id);
+    });
+
     socket.on("stream-replaced", (id, username) => {
       replaceUserStream(id, username, ref.current.stream, peer, socket);
     });
@@ -81,7 +87,10 @@ function RoomLayout() {
       socket.emit("join-room", getRoomId(window.location.pathname), id, username);
     });
 
-    return () => socket.disconnect();
+    return () => {
+      socket.disconnect();
+      peer.destroy();
+    }
   }, []);
 
   const connectToNewUser = (userId, name, stream, peer, socket) => {
