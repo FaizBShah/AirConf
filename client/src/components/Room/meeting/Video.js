@@ -43,7 +43,7 @@ function Video({ video: { id, username, stream }, socket, userId }) {
         <div className="video-info" style={{background: !isVideo ? '#64379f' : 'transparent'}}>
           <div className="info-header">
             <Tooltip title={isAudio ? "Mic On" : "Mic Off"}>
-              <IconButton style={{background: isAudio ? 'rgba(0, 0, 0, 0.3)' : 'rgba(221, 0, 0, 1)', margin: '0.2rem', height: '2rem', width: '2rem'}}>
+              <IconButton disabled={true} style={{background: isAudio ? 'rgba(0, 0, 0, 0.3)' : 'rgba(221, 0, 0, 1)', margin: '0.2rem', height: '2rem', width: '2rem'}}>
                 {isAudio ? (<Mic style={{color: 'white', fontSize: '14px'}} />) : (<MicOff style={{color: 'white', fontSize: '14px'}} />)}
               </IconButton>
             </Tooltip>

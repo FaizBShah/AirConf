@@ -6,12 +6,17 @@ import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
 import { useAppContext } from '../../context/store';
 import { addVideo, deleteUser, replaceStream } from '../../actions/videoActions';
+import { Notification } from '../MaterialComponents';
+import { IconButton } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 
 const ENDPOINT = "http://localhost:5000";
 
 function RoomLayout() {
   const [roomId, setRoomId] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [disconnectedUser, setDisconnectedUser] = useState('');
   const { state: { username, stream, videos }, dispatch } = useAppContext();
   const ref = useRef({
     socket: null,
@@ -48,10 +53,12 @@ function RoomLayout() {
       connectToNewUser(id, username, ref.current.stream, peer, socket);
     });
 
-    socket.on("user-disconnected", (id) => {
+    socket.on("user-disconnected", (id, username) => {
       console.log(id + " disconnected");
       deleteUser(id, dispatch);
       ref.current.currVideos.delete(id);
+      setDisconnectedUser(username);
+      setNotificationOpen(true);
     });
 
     socket.on("stream-replaced", (id, username) => {
@@ -183,6 +190,15 @@ function RoomLayout() {
     });
   }
 
+  const handleNotificationClose = (e, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setNotificationOpen(false);
+    setDisconnectedUser('');
+  }
+
   const getRoomId = (path) => {
     return path.split('/')[2];
   }
@@ -201,6 +217,23 @@ function RoomLayout() {
         dispatch={dispatch}
       />
       <Chat socket={ref.current.socket} open={chatOpen} setChatOpen={setChatOpen} />
+      <Notification
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center"
+        }}
+        open={notificationOpen}
+        message={`${disconnectedUser} left the meeting`}
+        autoHideDuration={1000}
+        onClose={handleNotificationClose}
+        action={
+          <>
+            <IconButton onClick={handleNotificationClose} >
+              <Close fontSize="small" style={{color: '#64379f'}} />
+            </IconButton>
+          </>
+        }
+      />
     </>
   )
 }
