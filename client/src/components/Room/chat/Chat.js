@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../../styles/Chat.scss';
 import { ChatDrawer, MessageInput } from '../../MaterialComponents';
 import { IconButton } from '@material-ui/core';
 import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons';
 import Messages from './Messages';
+import { useAppContext } from '../../../context/store';
+import { addMessage } from '../../../actions/messageActions';
 
-function Chat({ open, setChatOpen }) {
-  const [messages, setMessages] = useState([]);
+function Chat({ socket, open, setChatOpen }) {
+  const [message, setMessage] = useState('');
+  const { state: { messages, username }, dispatch } = useAppContext();
+
+  const onSendMessage = () => {
+    if (message.trim().length > 0) {
+      addMessage({ username: 'Me', body: message, time: '11:20' }, dispatch);
+      socket.emit("message-sent", username, message);
+      setMessage('');
+    }
+  }
 
   return (
     <>
@@ -35,13 +46,13 @@ function Chat({ open, setChatOpen }) {
             </div>
             <div className="message-input-area">
               <div className="message-input-inner-area">
-                <MessageInput label="Enter a message" />
+                <MessageInput label="Enter a message" value={message} onChange={(e) => setMessage(e.target.value)} />
               </div>
             </div>
             <div>
               <div className="icon-area">
                 <IconButton>
-                  <Send fontSize="small" style={{color: '#64379f'}} />
+                  <Send fontSize="small" style={{color: '#64379f'}} onClick={onSendMessage} />
                 </IconButton>
               </div>
             </div>

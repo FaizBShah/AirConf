@@ -1,12 +1,13 @@
 import { createContext, useContext, useReducer } from 'react';
-import { ADD_VIDEO, DELETE_USER, REPLACE_STREAM, RESET_ROOM, SET_USERNAME, SET_USER_STREAM } from './types';
+import { ADD_MESSAGE, ADD_VIDEO, DELETE_USER, REPLACE_STREAM, RESET_ROOM, SET_USERNAME, SET_USER_STREAM } from './types';
 
 const AppContext = createContext();
 
 const initialState = {
   stream: null,
   username: "",
-  videos: []
+  videos: [],
+  messages: []
 }
 
 const reducer = (state, action) => {
@@ -45,14 +46,20 @@ const reducer = (state, action) => {
         username: action.payload
       };
 
-    default:
-      return state;
-
     case DELETE_USER:
       return {
         ...state,
         videos: state.videos.filter(video => video.id !== action.payload)
-      }
+      };
+
+    case ADD_MESSAGE:
+      return {
+        ...state,
+        messages: [...state.messages, action.payload]
+      };
+
+    default:
+      return state;
   }
 }
 

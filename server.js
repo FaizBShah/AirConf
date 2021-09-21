@@ -19,7 +19,6 @@ app.use('/peerjs', peerServer);
 
 io.on('connection', (socket) => {
   console.log("Connected");
-  socket.emit("message", "Connected");
 
   let currUserId, currUserName, currRoom;
 
@@ -47,11 +46,14 @@ io.on('connection', (socket) => {
     socket.on("replace-stream", (userId, username) => {
       socket.to(roomId).emit("stream-replaced", userId, username);
     });
+
+    socket.on("message-sent", (username, message) => {
+      socket.to(roomId).emit("message", username, message);
+    });
   });
 
   socket.on('disconnect', () => {
     console.log("Disonnected");
-    io.emit("message", "Disconnected");
     socket.to(currRoom).emit("user-disconnected", currUserId, currUserName);
   });
 });

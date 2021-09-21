@@ -9,6 +9,7 @@ import { addVideo, deleteUser, replaceStream } from '../../actions/videoActions'
 import { Notification } from '../MaterialComponents';
 import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import { addMessage } from '../../actions/messageActions';
 
 const ENDPOINT = "http://localhost:5000";
 
@@ -45,8 +46,8 @@ function RoomLayout() {
     const peer = ref.current.peer;
     const socket = ref.current.socket;
 
-    socket.on("message", (message) => {
-      console.log(message);
+    socket.on("message", (username, body) => {
+      addMessage({ username, body, time: '11:20' }, dispatch);
     });
 
     socket.on("user-connected", (id, username) => {
