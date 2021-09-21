@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import '../../../styles/Chat.scss';
 import { ChatDrawer, MessageInput } from '../../MaterialComponents';
 import { IconButton } from '@material-ui/core';
-import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons';
+import { Close, Send } from '@material-ui/icons';
 import Message from './Message';
 import { useAppContext } from '../../../context/store';
 import { addMessage } from '../../../actions/messageActions';
