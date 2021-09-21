@@ -19,7 +19,15 @@
       .room-id {
         color: $color-primary;
         margin-right: 0.5rem;
+        
+        @media (max-width: 420px) {
+          margin-top: 0.5rem;
+        }
       }
+    }
+
+    @media (max-width: 420px) {
+      padding-left: 1rem;
     }
   }
 

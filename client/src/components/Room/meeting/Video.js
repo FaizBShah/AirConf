@@ -37,7 +37,7 @@ function Video({ video: { id, username, stream }, socket, userId }) {
   return (
     <>
       <div className="video-card" style={{minHeight: !isVideo ? '14rem' : 'auto'}}>
-        <video ref={videoRef} className="video-stream" src={stream} muted="muted">
+        <video ref={videoRef} className="video-stream" src={stream} muted={id === -1}>
           Sorry, there was an error in displaying the stream
         </video>
         <div className="video-info" style={{background: !isVideo ? '#64379f' : 'transparent'}}>

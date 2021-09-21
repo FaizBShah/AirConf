@@ -26,6 +26,12 @@ function Chat({ socket, open, setChatOpen }) {
     }
   }
 
+  const onPressEnter = (e) => {
+    if (e.keyCode === 13) {
+      onSendMessage();
+    }
+  }
+
   return (
     <>
       <ChatDrawer open={open} variant="persistent" anchor="right">
@@ -46,16 +52,14 @@ function Chat({ socket, open, setChatOpen }) {
             </div>
           </div>
           <div className="bottom-area">
-            <div>
-              <div className="icon-area">
-                <IconButton>
-                  <PhotoSizeSelectActual fontSize="small" style={{color: '#64379f'}} />
-                </IconButton>
-              </div>
-            </div>
             <div className="message-input-area">
               <div className="message-input-inner-area">
-                <MessageInput label="Enter a message" value={message} onChange={(e) => setMessage(e.target.value)} />
+                <MessageInput 
+                  label="Enter a message" 
+                  value={message} 
+                  onChange={(e) => setMessage(e.target.value)} 
+                  onKeyDown={(e) => onPressEnter(e)}
+                />
               </div>
             </div>
             <div>
