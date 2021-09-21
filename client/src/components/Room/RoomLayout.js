@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BottomMenu from './BottomMenu';
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 import Chat from './chat/Chat';
 import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
@@ -10,8 +10,6 @@ import { Notification } from '../MaterialComponents';
 import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { addMessage } from '../../actions/messageActions';
-
-const ENDPOINT = "http://localhost:5000";
 
 function RoomLayout() {
   const [roomId, setRoomId] = useState("");
@@ -41,7 +39,7 @@ function RoomLayout() {
       port: '5000'
     });
 
-    ref.current.socket = io(ENDPOINT);
+    ref.current.socket = io('/');
 
     const peer = ref.current.peer;
     const socket = ref.current.socket;
