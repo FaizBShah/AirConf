@@ -33,6 +33,16 @@
   .chat-area {
     flex: 1;
     position: relative;
+
+    .messages-main-area {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 0 1rem;
+      overflow-y: scroll;
+    }
   }
 
   .bottom-area {

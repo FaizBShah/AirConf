@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../../../styles/Chat.scss';
 import { ChatDrawer, MessageInput } from '../../MaterialComponents';
 import { IconButton } from '@material-ui/core';
 import { Close, PhotoSizeSelectActual, Send } from '@material-ui/icons';
-import Messages from './Messages';
+import Message from './Message';
 import { useAppContext } from '../../../context/store';
 import { addMessage } from '../../../actions/messageActions';
 
 function Chat({ socket, open, setChatOpen }) {
   const [message, setMessage] = useState('');
   const { state: { messages, username }, dispatch } = useAppContext();
+  const chatRef = useRef(null);
+
+  useEffect(() => {
+    chatRef.current.scrollTop = chatRef.current.scrollHeight;
+  }, [messages]);
 
   const onSendMessage = () => {
     if (message.trim().length > 0) {
@@ -34,7 +39,9 @@ function Chat({ socket, open, setChatOpen }) {
             </IconButton>
           </div>
           <div className="chat-area">
-            <Messages messages={messages} />
+            <div className="messages-main-area" ref={chatRef}>
+              {messages.map(message => <Message message={message} />)}
+            </div>
           </div>
           <div className="bottom-area">
             <div>
