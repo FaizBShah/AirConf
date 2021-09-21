@@ -47,7 +47,9 @@ function RoomLayout() {
     const socket = ref.current.socket;
 
     socket.on("message", (username, body) => {
-      addMessage({ username, body, time: '11:20' }, dispatch);
+      const currTime = new Date();
+
+      addMessage({ username, body, time: `${currTime.getHours()}:${currTime.getMinutes()}` }, dispatch);
     });
 
     socket.on("user-connected", (id, username) => {

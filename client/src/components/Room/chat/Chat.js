@@ -18,7 +18,9 @@ function Chat({ socket, open, setChatOpen }) {
 
   const onSendMessage = () => {
     if (message.trim().length > 0) {
-      addMessage({ username: 'Me', body: message, time: '11:20' }, dispatch);
+      const currTime = new Date();
+      
+      addMessage({ username: 'Me', body: message, time: `${currTime.getHours()}:${currTime.getMinutes()}` }, dispatch);
       socket.emit("message-sent", username, message);
       setMessage('');
     }
