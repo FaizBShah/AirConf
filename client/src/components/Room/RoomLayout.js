@@ -11,7 +11,7 @@ import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { addMessage } from '../../actions/messageActions';
 
-const ENDPOINT = window.location.href;
+const ENDPOINT = window.location.origin;
 
 function RoomLayout() {
   const [roomId, setRoomId] = useState("");
