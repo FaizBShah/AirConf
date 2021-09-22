@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import BottomMenu from './BottomMenu';
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 import Chat from './chat/Chat';
 import Meeting from './meeting/Meeting';
 import Peer from 'peerjs';
