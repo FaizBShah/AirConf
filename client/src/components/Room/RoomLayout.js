@@ -11,7 +11,7 @@ import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { addMessage } from '../../actions/messageActions';
 
-const ENDPOINT = "http://airconf.herokuapp.com/";
+const ENDPOINT = "https://airconf.herokuapp.com/";
 
 function RoomLayout() {
   const [roomId, setRoomId] = useState("");
