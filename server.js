@@ -13,7 +13,8 @@ const io = socketio(server, {
 });
 
 const peerServer = ExpressPeerServer(server, {
-  debug: true
+  debug: true,
+  port: 443
 });
 
 // Serve static assets if in production

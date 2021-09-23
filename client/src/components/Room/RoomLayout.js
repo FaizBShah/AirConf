@@ -11,7 +11,7 @@ import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { addMessage } from '../../actions/messageActions';
 
-const ENDPOINT = "https://airconf.herokuapp.com/";
+const ENDPOINT = "wss://airconf.herokuapp.com/";
 
 function RoomLayout() {
   const [roomId, setRoomId] = useState("");
@@ -38,7 +38,7 @@ function RoomLayout() {
     ref.current.peer = new Peer(undefined, {
       path: '/peerjs',
       host: window.location.hostname,
-      port: '5000'
+      port: '443'
     });
 
     ref.current.socket = io(ENDPOINT);
