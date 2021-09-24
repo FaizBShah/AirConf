@@ -9,7 +9,9 @@ const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
     origin: '*'
-  }
+  },
+  path: '/bridge',
+  serveClient: false
 });
 
 const peerServer = ExpressPeerServer(server, {
@@ -21,7 +23,7 @@ const peerServer = ExpressPeerServer(server, {
 if (process.env.NODE_ENV === 'production') {
   // For Heroku redirection to secured layer connection in production
   app.use((req, res, next) => {
-    if (req.header('x-forwarded-proto') !== 'https') {
+    if (req.header('x-forwarded-proto') !== 'https' && req.header('x-forwarded-proto') !== 'wss') {
       res.redirect(`https://${req.header('host')}${req.url}`);
     }
     else {
