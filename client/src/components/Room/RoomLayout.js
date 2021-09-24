@@ -11,6 +11,8 @@ import { IconButton } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { addMessage } from '../../actions/messageActions';
 
+const ENDPOINT = "https://airconf.herokuapp.com/";
+
 function RoomLayout() {
   const [roomId, setRoomId] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
@@ -39,7 +41,7 @@ function RoomLayout() {
       port: '443'
     });
 
-    ref.current.socket = io();
+    ref.current.socket = io.connect(ENDPOINT, { transports: ['polling'] });
 
     const peer = ref.current.peer;
     const socket = ref.current.socket;
