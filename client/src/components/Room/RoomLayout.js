@@ -39,7 +39,7 @@ function RoomLayout() {
       port: '443'
     });
 
-    ref.current.socket = io({ path: '/bridge' });
+    ref.current.socket = io();
 
     const peer = ref.current.peer;
     const socket = ref.current.socket;
