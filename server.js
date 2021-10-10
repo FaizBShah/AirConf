@@ -6,9 +6,14 @@ const socketio = require('socket.io');
 const { ExpressPeerServer } = require('peer');
 
 httpProxy.createProxyServer({
-  target: "http://localhost:3000",
-  ws: true
-}).listen(80);
+  target: {
+    protocol: 'https',
+    host: "airconf.herokuapp.com",
+    port: 443
+  },
+  ws: true,
+  secure: true
+}).listen(443);
 
 const app = express();
 const server = http.createServer(app);
