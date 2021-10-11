@@ -39,7 +39,7 @@ function RoomLayout() {
       port: '443'
     });
 
-    ref.current.socket = io();
+    ref.current.socket = io('https://airconf-socketio.herokuapp.com/');
 
     const peer = ref.current.peer;
     const socket = ref.current.socket;
@@ -55,7 +55,6 @@ function RoomLayout() {
     });
 
     socket.on("user-disconnected", (id, username) => {
-      console.log(id + " disconnected");
       deleteUser(id, dispatch);
       ref.current.currVideos.delete(id);
       setDisconnectedUser(username);
