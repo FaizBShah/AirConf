@@ -8,7 +8,8 @@ const server = http.createServer(app);
 
 const peerServer = ExpressPeerServer(server, {
   debug: true,
-  port: process.env.PORT || 5000
+  allow_discovery: true,
+  port: process.env.PORT || 5000,
 });
 
 // Serve static assets if in production

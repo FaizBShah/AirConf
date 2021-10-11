@@ -36,7 +36,8 @@ function RoomLayout() {
     ref.current.peer = new Peer(undefined, {
       path: '/peerjs',
       host: window.location.hostname,
-      port: '443'
+      port: '443',
+      secure: true
     });
 
     ref.current.socket = io('https://airconf-socketio.herokuapp.com/');
