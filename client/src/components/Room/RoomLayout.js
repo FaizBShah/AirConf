@@ -39,7 +39,7 @@ function RoomLayout() {
       secure: true
     });
 
-    ref.current.socket = io('https://airconf-socketio.herokuapp.com/');
+    ref.current.socket = io();
 
     const peer = ref.current.peer;
     const socket = ref.current.socket;
