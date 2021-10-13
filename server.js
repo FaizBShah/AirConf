@@ -1,16 +1,9 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
-const { ExpressPeerServer } = require('peer');
 
 const app = express();
 const server = http.createServer(app);
-
-const peerServer = ExpressPeerServer(server, {
-  debug: true,
-  allow_discovery: true,
-  port: process.env.PORT || 5000,
-});
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {
@@ -31,8 +24,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   })
 }
-
-app.use('/peerjs', peerServer);
 
 const PORT = process.env.PORT || 5000;
 

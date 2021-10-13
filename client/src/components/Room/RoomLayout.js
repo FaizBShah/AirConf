@@ -34,8 +34,7 @@ function RoomLayout() {
     setRoomId(getRoomId(window.location.pathname));
 
     ref.current.peer = new Peer(undefined, {
-      path: '/peerjs',
-      host: window.location.hostname,
+      host: 'airconf-peerjs.herokuapp.com',
       port: '443',
       secure: true
     });
